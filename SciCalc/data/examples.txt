@@ -1,0 +1,50 @@
+=== Scientific Calculator - Example Commands ===
+
+Basic Arithmetic:
+  add 2.5 1 -2 24.5125 0.33    → 26.3425
+  sub 10 2 3                    → 5
+  mul 2 3 4                     → 24
+  div 100 2 5                   → 10
+
+Trigonometry (Radians mode - default):
+  sin 0                         → 0
+  cos 0                         → 1
+  tan 0                         → 0
+  sin 1.5707963267948966       → 1 (approximately π/2)
+
+Trigonometry (Degrees mode):
+  mode deg
+  sin 30                        → 0.5
+  cos 60                        → 0.5
+  tan 45                        → 1
+  sin 90                        → 1
+
+Advanced Operations:
+  sqrt 9                        → 3
+  sqrt 2                        → 1.4142135623730951
+  pow 2 8                       → 256
+  pow 10 3                      → 1000
+  
+Logarithms:
+  log10 1000                    → 3
+  log10 100                     → 2
+  ln 2.718281828459045         → 1 (e^1)
+  ln 1                          → 0
+
+Integer Operations:
+  mod 7 3                       → 1
+  mod 10 3                      → 1
+  idiv 7 2                      → 3
+  idiv 10 3                     → 3
+
+Factorial:
+  fact 5                        → 120
+  fact 0                        → 1
+  fact 10                       → 3628800
+
+Error Cases (these will show error messages):
+  div 5 0                       → Error: Cannot divide by zero
+  sqrt -1                       → Error: Cannot take square root of negative number
+  ln 0                          → Error: Logarithm only defined for positive numbers
+  fact -1                       → Error: Factorial is only defined for non-negative numbers
+  fact 3.5                      → Error: Factorial requires an integer

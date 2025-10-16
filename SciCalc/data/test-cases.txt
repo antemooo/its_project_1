@@ -1,0 +1,158 @@
+# SciCalc Test Cases
+# Run these commands in the calculator to verify your implementation
+
+# ============================================================================
+# Basic Arithmetic Operations (⭐ Easy)
+# ============================================================================
+
+# Addition - Test variable arity
+add 2 3                    # Expected: 5
+add 1 2 3 4 5              # Expected: 15
+add 10.5 20.5              # Expected: 31
+add                        # Expected: 0 (empty sum)
+
+# Subtraction
+sub 10 3                   # Expected: 7
+sub 100 25 25              # Expected: 50
+sub 5.5 2.5                # Expected: 3
+
+# Multiplication
+mul 2 3 4                  # Expected: 24
+mul 5 5                    # Expected: 25
+mul 10 0.5                 # Expected: 5
+mul                        # Expected: 1 (empty product)
+
+# Division - Test error handling
+div 10 2                   # Expected: 5
+div 100 2 5                # Expected: 10 (100/2/5)
+div 7 2                    # Expected: 3.5
+div 10 0                   # Expected: Error (division by zero)
+
+# ============================================================================
+# Advanced Operations (⭐⭐ Medium)
+# ============================================================================
+
+# Square Root - Test domain validation
+sqrt 16                    # Expected: 4
+sqrt 2                     # Expected: 1.414... (approximately)
+sqrt 0                     # Expected: 0
+sqrt -1                    # Expected: Error (negative number)
+
+# Power
+pow 2 8                    # Expected: 256
+pow 3 2                    # Expected: 9
+pow 5 0                    # Expected: 1
+pow 2 -1                   # Expected: 0.5
+
+# Logarithms - Test domain validation
+log10 1000                 # Expected: 3
+log10 100                  # Expected: 2
+log10 10                   # Expected: 1
+log10 1                    # Expected: 0
+log10 0                    # Expected: Error (log of 0)
+log10 -5                   # Expected: Error (log of negative)
+
+ln 2.718281828             # Expected: ~1 (e^1)
+ln 7.389056                # Expected: ~2 (e^2)
+ln 1                       # Expected: 0
+ln 0                       # Expected: Error
+
+# Modulo
+mod 7 3                    # Expected: 1
+mod 10 5                   # Expected: 0
+mod 17 4                   # Expected: 1
+
+# Integer Division
+idiv 7 2                   # Expected: 3 (not 3.5)
+idiv 10 3                  # Expected: 3 (not 3.333...)
+idiv 10 0                  # Expected: Error (division by zero)
+
+# ============================================================================
+# Factorial (⭐⭐⭐ Medium)
+# ============================================================================
+
+fact 5                     # Expected: 120 (5! = 5*4*3*2*1)
+fact 0                     # Expected: 1 (0! = 1 by definition)
+fact 3                     # Expected: 6
+fact 10                    # Expected: 3628800
+fact -2                    # Expected: Error (negative factorial)
+fact 3.5                   # Expected: Error (non-integer)
+
+# ============================================================================
+# Trigonometric Functions (⭐⭐ Medium) - Test angle modes
+# ============================================================================
+
+# First, set angle mode to degrees
+mode deg
+
+# Sine (degrees)
+sin 30                     # Expected: 0.5
+sin 90                     # Expected: 1
+sin 0                      # Expected: 0
+
+# Cosine (degrees)
+cos 60                     # Expected: 0.5
+cos 0                      # Expected: 1
+cos 90                     # Expected: 0 (or very close)
+
+# Tangent (degrees)
+tan 45                     # Expected: 1
+tan 0                      # Expected: 0
+
+# Now switch to radians
+mode rad
+
+# Sine (radians)
+sin 1.5707963267948966     # Expected: 1 (π/2 radians = 90°)
+sin 0                      # Expected: 0
+
+# Cosine (radians)
+cos 0                      # Expected: 1
+cos 3.141592653589793      # Expected: -1 (π radians = 180°)
+
+# Tangent (radians)
+tan 0.7853981633974483     # Expected: 1 (π/4 radians = 45°)
+
+# ============================================================================
+# Complex Calculations
+# ============================================================================
+
+# Pythagorean theorem: sqrt(3^2 + 4^2) = 5
+pow 3 2                    # Expected: 9
+pow 4 2                    # Expected: 16
+add 9 16                   # Expected: 25
+sqrt 25                    # Expected: 5
+
+# ============================================================================
+# Command Reference
+# ============================================================================
+
+help                       # Show all available commands
+mode deg                   # Switch to degree mode
+mode rad                   # Switch to radian mode
+exit                       # Quit calculator
+
+# ============================================================================
+# Testing Tips for Students
+# ============================================================================
+
+# 1. Start with simple operations (add, sub, mul)
+# 2. Test edge cases (empty input, zero, negative numbers)
+# 3. Verify error handling (division by zero, negative sqrt)
+# 4. Test variable arity (operations with different argument counts)
+# 5. Check domain validation (logarithm of negative, factorial of decimal)
+# 6. Switch between degree and radian modes for trigonometry
+# 7. Use high precision numbers to verify floating-point accuracy
+
+# ============================================================================
+# Expected Output Format
+# ============================================================================
+
+# The calculator should output results with high precision (G17 format)
+# Example:
+# > add 1 2 3
+# 6
+# > sqrt 2
+# 1.4142135623730951
+# > div 10 0
+# Error: Cannot divide by zero

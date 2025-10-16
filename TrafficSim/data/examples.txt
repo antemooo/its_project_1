@@ -1,0 +1,469 @@
+=============================================================================
+TRAFFIC SIMULATION - EXAMPLE USAGE & TEST CASES
+=============================================================================
+
+This file contains example commands and test cases to help you verify your
+TrafficSim implementation. Use these to test pathfinding, algorithm correctness,
+and system behavior.
+
+=============================================================================
+BUILDING AND RUNNING
+=============================================================================
+
+1. Build the project:
+   cd TrafficSim
+   dotnet build
+
+2. Run the application:
+   dotnet run
+
+3. The application will start a command prompt where you can enter commands.
+
+=============================================================================
+BASIC COMMANDS
+=============================================================================
+
+Command Format:
+  path <x1> <y1> <x2> <y2>   Find shortest path from (x1,y1) to (x2,y2)
+  exit                        Exit the application
+
+Examples:
+  path 0 0 2 2               # Find path from (0,0) to (2,2)
+  path 1 1 1 1               # Same start and goal
+  exit                       # Quit
+
+=============================================================================
+TEST CASES - BASIC PATHFINDING
+=============================================================================
+
+Test Case 1: Adjacent Horizontal Movement
+------------------------------------------
+Command: path 0 0 1 0
+Expected Result: 
+  Path: (0,0) → (1,0)
+  Total Cost: 1
+  Explanation: Single move to the right
+
+Test Case 2: Adjacent Vertical Movement
+----------------------------------------
+Command: path 0 0 0 1
+Expected Result:
+  Path: (0,0) → (0,1)
+  Total Cost: 1
+  Explanation: Single move down
+
+Test Case 3: Diagonal Movement (No Direct Diagonal)
+----------------------------------------------------
+Command: path 0 0 1 1
+Expected Result:
+  Path: (0,0) → (1,0) → (1,1) OR (0,0) → (0,1) → (1,1)
+  Total Cost: 2
+  Explanation: Manhattan distance = |1-0| + |1-0| = 2
+  Note: Multiple valid paths exist
+
+Test Case 4: Same Start and Goal
+---------------------------------
+Command: path 1 1 1 1
+Expected Result:
+  Path: (1,1)
+  Total Cost: 0
+  Explanation: Already at destination
+
+=============================================================================
+TEST CASES - MEDIUM DISTANCE PATHS
+=============================================================================
+
+Test Case 5: Straight Line (Horizontal)
+----------------------------------------
+Command: path 0 0 3 0
+Expected Result:
+  Path: (0,0) → (1,0) → (2,0) → (3,0)
+  Total Cost: 3
+  Manhattan Distance: 3
+
+Test Case 6: Straight Line (Vertical)
+--------------------------------------
+Command: path 0 0 0 3
+Expected Result:
+  Path: (0,0) → (0,1) → (0,2) → (0,3)
+  Total Cost: 3
+  Manhattan Distance: 3
+
+Test Case 7: L-Shaped Path
+---------------------------
+Command: path 0 0 2 2
+Expected Result:
+  Path: (0,0) → (1,0) → (2,0) → (2,1) → (2,2)
+        OR (0,0) → (0,1) → (0,2) → (1,2) → (2,2)
+        OR other valid 4-move paths
+  Total Cost: 4
+  Manhattan Distance: |2-0| + |2-0| = 4
+
+Test Case 8: Rectangular Movement
+----------------------------------
+Command: path 0 0 3 2
+Expected Result:
+  Total Cost: 5
+  Manhattan Distance: |3-0| + |2-0| = 5
+  Note: Many valid paths exist
+
+=============================================================================
+TEST CASES - EDGE CASES (5x5 Grid)
+=============================================================================
+
+Assuming a 5x5 grid (adjust based on your City initialization):
+
+Test Case 9: Top-Left Corner to Bottom-Right Corner
+----------------------------------------------------
+Command: path 0 0 4 4
+Expected Result:
+  Total Cost: 8
+  Manhattan Distance: |4-0| + |4-0| = 8
+  Explanation: Maximum distance in 5x5 grid
+
+Test Case 10: Bottom-Right to Top-Left
+---------------------------------------
+Command: path 4 4 0 0
+Expected Result:
+  Total Cost: 8
+  Manhattan Distance: |0-4| + |0-4| = 8
+  Explanation: Reverse path, same cost
+
+Test Case 11: Middle to Corner
+-------------------------------
+Command: path 2 2 0 0
+Expected Result:
+  Total Cost: 4
+  Manhattan Distance: |0-2| + |0-2| = 4
+
+Test Case 12: Middle to Opposite Corner
+----------------------------------------
+Command: path 2 2 4 4
+Expected Result:
+  Total Cost: 4
+  Manhattan Distance: |4-2| + |4-2| = 4
+
+=============================================================================
+TEST CASES - ALGORITHM VERIFICATION
+=============================================================================
+
+Test Case 13: Multiple Paths - Same Cost
+-----------------------------------------
+Command: path 0 0 2 2
+Expected Behavior:
+  - Dijkstra should find ONE valid shortest path
+  - Cost should be 4 (Manhattan distance)
+  - Path may vary but cost must be optimal
+  
+Valid paths include:
+  (0,0) → (1,0) → (2,0) → (2,1) → (2,2)
+  (0,0) → (0,1) → (0,2) → (1,2) → (2,2)
+  (0,0) → (1,0) → (1,1) → (1,2) → (2,2)
+  (0,0) → (1,0) → (1,1) → (2,1) → (2,2)
+  (0,0) → (0,1) → (1,1) → (1,2) → (2,2)
+  (0,0) → (0,1) → (1,1) → (2,1) → (2,2)
+
+Test Case 14: Zero-Length Path
+-------------------------------
+Command: path 3 3 3 3
+Expected Result:
+  Path: (3,3)
+  Total Cost: 0
+  Explanation: Special case handling
+
+Test Case 15: Near Neighbors
+-----------------------------
+Commands:
+  path 1 1 2 1    # Right neighbor
+  path 1 1 1 2    # Down neighbor
+  path 1 1 0 1    # Left neighbor
+  path 1 1 1 0    # Up neighbor
+
+Expected Result: Each should have cost = 1
+
+=============================================================================
+MANHATTAN DISTANCE VERIFICATION
+=============================================================================
+
+The Manhattan distance formula is: |x2-x1| + |y2-y1|
+
+Verify that your shortest path cost equals Manhattan distance:
+
+From (0,0):
+  To (0,0): Distance = 0
+  To (1,0): Distance = 1
+  To (0,1): Distance = 1
+  To (1,1): Distance = 2
+  To (2,2): Distance = 4
+  To (3,2): Distance = 5
+  To (4,4): Distance = 8
+
+From (2,2):
+  To (0,0): Distance = 4
+  To (1,1): Distance = 2
+  To (3,3): Distance = 2
+  To (4,4): Distance = 4
+
+=============================================================================
+TESTING YOUR IMPLEMENTATION
+=============================================================================
+
+Step 1: Test Basic Classes
+---------------------------
+Before testing pathfinding, ensure these work:
+
+1. Vehicle record - Simple data class
+2. Side enum - Should have North, East, South, West
+3. LightState enum - Should have Red, Green, Yellow
+
+Step 2: Test TrafficLight Class
+--------------------------------
+✓ Constructor initializes Green state and empty queue
+✓ TryEnqueue adds vehicles to queue
+✓ TryEnqueue respects greenPerMinute limit
+✓ ReleaseThisMinute removes vehicles from queue
+✓ Tick transitions: Green(60) → Yellow(3) → Red(57) → Green(60)
+
+Example manual test:
+  var light = new TrafficLight(2); // 2 vehicles/min
+  light.TryEnqueue(Vehicle.Car);   // Should succeed
+  light.TryEnqueue(Vehicle.Car);   // Should succeed
+  light.TryEnqueue(Vehicle.Car);   // Should fail (limit reached)
+
+Step 3: Test Street Class
+--------------------------
+✓ TryEnter respects capacity limit
+✓ Tick decrements remaining time
+✓ Vehicles exit when remaining time = 0
+✓ Load property returns correct count
+
+Example manual test:
+  var street = new Street(2, 5); // capacity=2, minutes=5
+  street.TryEnter(Vehicle.Car);  // Should succeed
+  street.TryEnter(Vehicle.Car);  // Should succeed
+  street.TryEnter(Vehicle.Car);  // Should fail (full)
+  street.Tick();                 // Time passes
+  // After 5 ticks, first vehicle should exit
+
+Step 4: Test CrossRoad Class
+-----------------------------
+✓ Constructor initializes 4 traffic lights
+✓ Constructor initializes 4 streets (N, E, S, W)
+✓ Can access lights and streets by Side enum
+
+Step 5: Test City Class
+------------------------
+✓ Constructor creates width × height grid
+✓ At(x, y) returns correct crossroad
+✓ Neighbors(x, y) returns valid adjacent crossroads
+✓ Neighbors doesn't return out-of-bounds positions
+
+Step 6: Test ShortestPath (Dijkstra)
+-------------------------------------
+✓ Returns empty list when start = goal
+✓ Returns correct path for adjacent nodes
+✓ Returns optimal path (cost = Manhattan distance)
+✓ Works for all test cases above
+
+Step 7: Test App Class (Integration)
+-------------------------------------
+✓ Run application with dotnet run
+✓ Test all pathfinding commands from above
+✓ Verify output format matches expected results
+✓ Test "exit" command
+
+=============================================================================
+DEBUGGING TIPS
+=============================================================================
+
+If your pathfinding doesn't work:
+---------------------------------
+
+1. Check Neighbors() method:
+   - Are you returning crossroads in all 4 directions?
+   - Are you checking grid boundaries correctly?
+   - Test with: city.Neighbors(0, 0) should return only 2 neighbors
+
+2. Check Dijkstra initialization:
+   - dist[start] should be 0
+   - dist[all others] should be int.MaxValue
+   - prev dictionary should be initialized
+
+3. Check edge relaxation:
+   - Are you updating dist[neighbor] correctly?
+   - Are you updating prev[neighbor] when you find shorter path?
+   - Edge weight should always be 1 (uniform grid)
+
+4. Check path reconstruction:
+   - Are you working backwards from goal to start?
+   - Are you reversing the path at the end?
+   - What happens when start = goal?
+
+5. Print debug information:
+   Console.WriteLine($"Visiting: ({x}, {y}), dist = {dist[(x,y)]}");
+
+=============================================================================
+EXPECTED OUTPUT FORMAT
+=============================================================================
+
+When you run: path 0 0 2 2
+
+Example Output:
+---------------
+Shortest path from (0,0) to (2,2):
+(0,0) → (1,0) → (2,0) → (2,1) → (2,2)
+Total cost: 4
+
+OR:
+
+Path from (0,0) to (2,2):
+  Step 1: (0,0)
+  Step 2: (1,0)
+  Step 3: (2,0)
+  Step 4: (2,1)
+  Step 5: (2,2)
+Total moves: 4
+
+(Your format may vary, but should show the path and cost)
+
+=============================================================================
+ALGORITHM COMPLEXITY ANALYSIS
+=============================================================================
+
+For a grid of size W × H:
+
+Dijkstra's Algorithm:
+- Vertices (V): W × H crossroads
+- Edges (E): ~4V (each crossroad has up to 4 neighbors)
+- Time Complexity: O(V²) with linear search, O((V+E) log V) with priority queue
+- Space Complexity: O(V) for dist and prev dictionaries
+
+For a 5×5 grid:
+- V = 25 vertices
+- E ≈ 80 edges (interior nodes have 4, edges have 3, corners have 2)
+- Very fast even with basic implementation
+
+=============================================================================
+EXTENSIONS & CHALLENGES
+=============================================================================
+
+Once basic pathfinding works, try these extensions:
+
+1. Add Traffic Congestion:
+   - Weight edges by street.Load
+   - Busier streets have higher cost
+   - Dijkstra naturally handles weighted graphs
+
+2. Consider Traffic Light States:
+   - Red lights add waiting time
+   - Incorporate into edge weights
+
+3. Implement A* Algorithm:
+   - Use Manhattan distance as heuristic
+   - Should be faster than Dijkstra
+   - Still finds optimal path
+
+4. Multiple Vehicle Types:
+   - Emergency vehicles get priority
+   - Different speeds on streets
+
+5. Dynamic Traffic:
+   - Traffic changes over time
+   - Re-route if conditions change
+
+6. Visualization:
+   - Print grid with path highlighted
+   - Show traffic flow animation
+
+=============================================================================
+GRADING CRITERIA
+=============================================================================
+
+Your implementation will be evaluated on:
+
+1. Correctness (60%):
+   ✓ All test cases pass
+   ✓ Optimal paths found (cost = Manhattan distance)
+   ✓ Edge cases handled (same start/goal, boundaries)
+
+2. Code Quality (25%):
+   ✓ Clean, readable code
+   ✓ Proper use of data structures
+   ✓ Good variable names
+   ✓ Comments for complex logic
+
+3. Algorithm Implementation (15%):
+   ✓ Dijkstra algorithm implemented correctly
+   ✓ Efficient neighbor traversal
+   ✓ Proper initialization and termination
+
+=============================================================================
+COMMON MISTAKES TO AVOID
+=============================================================================
+
+❌ Forgetting to initialize dist[start] = 0
+❌ Not checking grid boundaries in Neighbors()
+❌ Forgetting to reverse path after reconstruction
+❌ Using wrong edge weight (should be 1 for uniform grid)
+❌ Not handling start = goal case
+❌ Infinite loop in Dijkstra (not marking visited)
+❌ Off-by-one errors in grid indexing
+❌ Not checking prev.ContainsKey() before path reconstruction
+
+=============================================================================
+SAMPLE SESSION
+=============================================================================
+
+$ dotnet run
+
+Traffic Simulation - Shortest Path Finder
+Type 'path x1 y1 x2 y2' to find shortest path
+Type 'exit' to quit
+
+> path 0 0 2 2
+Shortest path from (0,0) to (2,2):
+(0,0) → (1,0) → (2,0) → (2,1) → (2,2)
+Total cost: 4
+
+> path 1 1 1 1
+Already at destination!
+Path: (1,1)
+Total cost: 0
+
+> path 0 0 4 4
+Shortest path from (0,0) to (4,4):
+(0,0) → (1,0) → (2,0) → (3,0) → (4,0) → (4,1) → (4,2) → (4,3) → (4,4)
+Total cost: 8
+
+> exit
+Goodbye!
+
+=============================================================================
+ADDITIONAL RESOURCES
+=============================================================================
+
+1. Documentation:
+   - README.md - Project overview
+   - IMPLEMENTATION_GUIDE.md - Detailed implementation steps
+   - QUICK_REFERENCE.md - Quick lookup for all tasks
+
+2. Example Skeletons:
+   - skeleton-examples/ folder has complete examples
+
+3. Test Data:
+   - This file (examples.txt)
+   - data/test-cases.txt - Unit test examples
+
+4. Algorithm References:
+   - Dijkstra's Algorithm: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+   - Manhattan Distance: https://en.wikipedia.org/wiki/Taxicab_geometry
+
+=============================================================================
+GOOD LUCK!
+=============================================================================
+
+Start with the basic classes (Vehicle, Side, LightState) and work your way
+up to the complex algorithms. Test each component thoroughly before moving
+to the next. The skeleton code provides hints and structure to guide you.
+
+Remember: The journey of a thousand lines begins with a single TODO! 🚀

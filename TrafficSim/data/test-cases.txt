@@ -1,0 +1,280 @@
+# TrafficSim Test Cases
+# Test the traffic simulation and pathfinding algorithms
+
+# ============================================================================
+# Setup: Understanding the Grid
+# ============================================================================
+
+# The simulation uses a Manhattan-style grid:
+# - Coordinates: (X, Y) where (0,0) is top-left
+# - X increases going East (right)
+# - Y increases going South (down)
+# - Default city: 3x3 grid (coordinates 0-2)
+
+# Example 3x3 grid:
+#   (0,0) -- (1,0) -- (2,0)
+#     |        |        |
+#   (0,1) -- (1,1) -- (2,1)
+#     |        |        |
+#   (0,2) -- (1,2) -- (2,2)
+
+# ============================================================================
+# Pathfinding Tests (⭐⭐⭐⭐⭐ Very Hard)
+# ============================================================================
+
+# Test 1: Simple path (adjacent nodes)
+path 0 0 1 0
+# Expected: (0,0) -> (1,0)
+# Distance: 1 step
+
+# Test 2: Diagonal path (shortest distance)
+path 0 0 2 2
+# Expected: (0,0) -> (1,0) -> (2,0) -> (2,1) -> (2,2)
+# OR:       (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2)
+# OR:       (0,0) -> (0,1) -> (1,1) -> (2,1) -> (2,2)
+# OR:       (0,0) -> (1,0) -> (1,1) -> (1,2) -> (2,2)
+# Distance: 4 steps (Manhattan distance)
+
+# Test 3: Vertical path
+path 1 0 1 2
+# Expected: (1,0) -> (1,1) -> (1,2)
+# Distance: 2 steps
+
+# Test 4: Horizontal path
+path 0 1 2 1
+# Expected: (0,1) -> (1,1) -> (2,1)
+# Distance: 2 steps
+
+# Test 5: Same start and goal
+path 1 1 1 1
+# Expected: (1,1)
+# Distance: 0 steps
+
+# Test 6: Corner to corner
+path 0 0 2 2
+# Expected: Path of length 5 (4 moves + start node)
+# Manhattan distance: |2-0| + |2-0| = 4
+
+path 2 2 0 0
+# Expected: Path of length 5 (reverse of above)
+
+# Test 7: All corners
+path 0 0 0 2
+# Expected: (0,0) -> (0,1) -> (0,2)
+
+path 0 0 2 0
+# Expected: (0,0) -> (1,0) -> (2,0)
+
+path 2 0 0 2
+# Expected: Path from top-right to bottom-left
+
+path 2 0 2 2
+# Expected: (2,0) -> (2,1) -> (2,2)
+
+# ============================================================================
+# Testing Dijkstra Algorithm Implementation
+# ============================================================================
+
+# The algorithm should:
+# 1. Initialize all distances to infinity except start (0)
+# 2. Build unvisited set with all nodes
+# 3. Repeatedly pick minimum distance node from unvisited
+# 4. Update distances to neighbors (relaxation)
+# 5. Mark as visited
+# 6. Reconstruct path using predecessor map
+
+# Verification checklist:
+# ✓ Path exists between any two nodes in connected grid
+# ✓ Path length = Manhattan distance (|x2-x1| + |y2-y1|)
+# ✓ Path only uses valid adjacent moves (N/S/E/W)
+# ✓ No diagonal moves (not allowed in Manhattan grid)
+# ✓ Path is optimal (shortest possible)
+
+# ============================================================================
+# Unit Test Ideas for Students
+# ============================================================================
+
+# Test Vehicle class:
+# - Create vehicle with destination
+# - Test priority flag
+# - Verify Tick() increments TravelTime
+# - Check AddHop() records route
+
+# Test TrafficLight class:
+# - Test state transitions: Green -> Yellow -> Red -> Green
+# - Test queue operations: TryEnqueue with priority
+# - Test flow rates: Green (full), Yellow (half), Red (none)
+# - Test capacity limits
+# - Test state duration configuration
+
+# Test Street class:
+# - Test TryEnter with capacity check
+# - Test Tick() processes vehicles
+# - Test vehicles exit after TravelTime minutes
+# - Test Load property
+
+# Test CrossRoad class:
+# - Test Light(Side) returns correct traffic light
+# - Test StreetOut(Side) returns correct street
+# - Test Tick() propagates to all lights
+# - Verify 4 sides initialized (N/E/S/W)
+
+# Test City class:
+# - Test grid initialization (all crossroads created)
+# - Test At(x, y) returns correct crossroad
+# - Test Neighbors() returns adjacent nodes
+# - Test boundary handling (no out-of-bounds neighbors)
+
+# Test ShortestPath (Dijkstra):
+# - Test path exists between connected nodes
+# - Test shortest path is found (not just any path)
+# - Test handles start == goal
+# - Test path reconstruction is correct
+# - Test all paths have correct Manhattan distance
+
+# ============================================================================
+# Example Unit Test Code (for reference)
+# ============================================================================
+
+# // Test Vehicle
+# var v = new Vehicle("Car1", (2, 2), priority: false);
+# Assert.Equal("Car1", v.Name);
+# Assert.Equal((2, 2), v.Destination);
+# Assert.False(v.Priority);
+# Assert.Equal(0, v.TravelTime);
+# 
+# v.Tick();
+# Assert.Equal(1, v.TravelTime);
+# 
+# v.AddHop((0, 0));
+# Assert.Contains((0, 0), v.Route);
+
+# // Test TrafficLight
+# var light = new TrafficLight(LightState.Green);
+# Assert.Equal(LightState.Green, light.State);
+# 
+# var v1 = new Vehicle("V1", (1, 1), false);
+# Assert.True(light.TryEnqueue(v1));
+# Assert.Equal(1, light.QueueLength);
+# 
+# var released = light.ReleaseThisMinute().ToList();
+# Assert.Contains(v1, released);
+
+# // Test City and Pathfinding
+# var city = new City(3, 3);
+# Assert.Equal(3, city.W);
+# Assert.Equal(3, city.H);
+# 
+# var cr = city.At(1, 1);
+# Assert.NotNull(cr);
+# Assert.Equal((1, 1), cr.Pos);
+# 
+# var path = ShortestPath.Dijkstra(city, (0, 0), (2, 2));
+# Assert.Equal(5, path.Count); // 4 moves + start
+# Assert.Equal((0, 0), path[0]); // Start
+# Assert.Equal((2, 2), path[4]); // End
+# 
+# // Verify Manhattan distance
+# int distance = Math.Abs(2 - 0) + Math.Abs(2 - 0);
+# Assert.Equal(distance + 1, path.Count); // +1 for start node
+
+# ============================================================================
+# Performance Considerations
+# ============================================================================
+
+# Dijkstra Complexity:
+# - Time: O(V² + E) with linear search for minimum
+# - Time: O((V + E) log V) with priority queue
+# - Space: O(V) for distance and predecessor maps
+# 
+# For 3x3 grid: V = 9, E = 12 (each internal node has 4 edges, border nodes have 2-3)
+# 
+# Optimizations to consider:
+# - Use PriorityQueue<T, int> instead of OrderBy().First()
+# - Early termination when goal is reached
+# - Bidirectional search for very large grids
+# - A* algorithm with Manhattan heuristic
+
+# ============================================================================
+# Algorithm Verification
+# ============================================================================
+
+# Properties to verify:
+# 1. Completeness: Algorithm always finds a path if one exists
+# 2. Optimality: Found path is shortest possible
+# 3. Correctness: Path only uses valid edges
+# 4. Efficiency: No unnecessary exploration
+
+# Test these properties:
+path 0 0 2 2    # Should be 4 moves (optimal)
+path 1 1 1 1    # Should be 0 moves (trivial case)
+path 0 0 0 2    # Should be 2 moves (straight line)
+
+# ============================================================================
+# Command Reference
+# ============================================================================
+
+path x1 y1 x2 y2    # Find shortest path from (x1,y1) to (x2,y2)
+exit                # Quit application
+
+# ============================================================================
+# Testing Tips for Students
+# ============================================================================
+
+# 1. Start with Street and TrafficLight (simpler classes)
+# 2. Test CrossRoad initialization (all 4 sides)
+# 3. Test City grid setup (all positions valid)
+# 4. Implement Dijkstra step by step:
+#    a. Initialization (distances, unvisited set)
+#    b. Main loop (pick minimum, relax edges)
+#    c. Path reconstruction (backtrack through predecessors)
+# 5. Verify with small examples (2x2, 3x3 grids)
+# 6. Test edge cases (same start/goal, corners)
+# 7. Calculate expected Manhattan distances manually
+
+# ============================================================================
+# Expected Output Format
+# ============================================================================
+
+# > path 0 0 2 2
+# (0,0) -> (1,0) -> (2,0) -> (2,1) -> (2,2)
+#
+# > path 1 1 1 1
+# (1,1)
+#
+# > path 0 0 5 5
+# No path
+
+# ============================================================================
+# Algorithm Learning Resources
+# ============================================================================
+
+# Dijkstra's Algorithm:
+# - Greedy algorithm for shortest path in weighted graphs
+# - Always picks minimum distance node (optimal choice)
+# - Works for non-negative edge weights
+# - Builds shortest-path tree from source
+# 
+# Manhattan Distance:
+# - Distance = |x2 - x1| + |y2 - y1|
+# - No diagonal moves allowed (only N/S/E/W)
+# - Natural metric for grid-based maps
+# 
+# Graph Representation:
+# - City grid = implicit graph
+# - Nodes = crossroads
+# - Edges = streets connecting adjacent crossroads
+# - Weight = 1 (uniform, can extend to street travel time)
+
+# ============================================================================
+# Extension Ideas (Optional)
+# ============================================================================
+
+# 1. Add street weights (use TravelTime instead of fixed 1)
+# 2. Handle closed streets (infinite weight or skip)
+# 3. Implement traffic congestion (dynamic weights)
+# 4. Add vehicle simulation (spawn, move, collect statistics)
+# 5. Visualize paths in console (ASCII art grid)
+# 6. Compare Dijkstra with A* using Manhattan heuristic
+# 7. Add multiple vehicles with collision avoidance
+# 8. Track statistics (average travel time, congestion points)
