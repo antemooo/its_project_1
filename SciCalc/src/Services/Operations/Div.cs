@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Div.cs
-// ⭐ DIFFICULTY: Medium | ⏱️ TIME: 20-30 minutes
-// 🧪 TEST: div 10 2 → 5.0 | div 100 2 5 → 10.0 | div 10 0 → ERROR
-//==============================================================================
-
 using System;
 using System.Linq;
 using SciCalc.Models;
@@ -21,14 +15,20 @@ public sealed class Div : IOperation
     public string Help => "div a b [c ...] - Divides a by b, then by c, etc. (a/b/c/...)";
     
     /// <summary>
-    /// STUDENT TODO: Implement division with validation.
-    /// 1. Check args.Length >= 2, throw ArgumentException if not
-    /// 2. Check each divisor != 0, throw DivideByZeroException if zero
-    /// 3. Divide first by all subsequent: args[0] / args[1] / args[2] ...
-    /// HINT: Use Skip(1).Aggregate() or a loop with validation
+    /// Performs sequential division with error checking.
+    /// Throws DivideByZeroException if any divisor is zero.
     /// </summary>
     public double Evaluate(params double[] args)
     {
-        throw new NotImplementedException("TODO: Implement division with error handling");
+        if (args.Length < 2)
+            throw new ArgumentException("Division requires at least 2 arguments");
+        
+        // Divide first number by each subsequent number
+        return args.Skip(1).Aggregate(args[0], (accumulator, x) =>
+        {
+            if (x == 0)
+                throw new DivideByZeroException("Cannot divide by zero");
+            return accumulator / x;
+        });
     }
 }

@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Add.cs
-// ⭐ DIFFICULTY: Easy | ⏱️ TIME: 10-15 minutes
-// 🧪 TEST: add 2 3 → 5.0 | add 1 2 3 4 → 10.0 | add → 0.0
-//==============================================================================
-
 using System;
 using System.Linq;
 using SciCalc.Models;
@@ -21,12 +15,11 @@ public sealed class Add : IOperation
     public string Help => "add x y [z ...] - Adds all numbers together";
     
     /// <summary>
-    /// STUDENT TODO: Implement addition.
-    /// HINT: Use LINQ Sum() method. Handle empty array → return 0.
-    /// One-liner possible: return args.Length == 0 ? 0 : args.Sum();
+    /// Adds all numbers. Uses LINQ's Sum() method for clean code.
+    /// Returns 0 if no arguments provided (identity element for addition).
     /// </summary>
     public double Evaluate(params double[] args)
     {
-        throw new NotImplementedException("TODO: Implement addition");
+        return args.Length == 0 ? 0 : args.Sum();
     }
 }

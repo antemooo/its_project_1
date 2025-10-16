@@ -2,12 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-//==============================================================================
-// FILE: Show.cs
-// ⭐⭐⭐ DIFFICULTY: Medium | ⏱️ TIME: 45-60 minutes
-// 🧪 TEST: See skeleton-examples/Show.cs for complete reference
-//==============================================================================
-
 namespace CinemaApp.Models;
 
 /// <summary>
@@ -19,47 +13,82 @@ namespace CinemaApp.Models;
 /// </summary>
 public sealed class Show
 {
-    //==========================================================================
-    // STUDENT TODO: Implement Show class with seat booking logic
-    //
-    // PROPERTIES TO IMPLEMENT:
-    // - public Guid Id { get; } = Guid.NewGuid();
-    // - public Movie Movie { get; }
-    // - public Room Room { get; }
-    // - public DateTime Start { get; }
-    // - public DateTime End => Start + Movie.Duration;  // Calculated property!
-    // - public decimal Price { get; }
-    // - private readonly HashSet<int> _taken = new();  // For fast lookup
-    // - public int AvailableSeats => Room.Capacity - _taken.Count;
-    //
-    // CONSTRUCTOR:
-    // - public Show(Movie movie, Room room, DateTime start, decimal price)
-    // - Assign all properties
-    //
-    // TRYBBOK METHOD: (Returns true if booking succeeds)
-    // - public bool TryBook(params int[] seats)
-    // - Validation steps:
-    //   1. Check seats.Length > 0 (return false if empty)
-    //   2. Check all seats are in range [1, Room.Capacity] (use Any + lambda)
-    //   3. Check no seat is already in _taken set (use Any + Contains)
-    //   4. If all valid: Add each seat to _taken, return true
-    //
-    // TOSTRING:
-    // - Format: "[{Id:N}] {Movie.Title} | {Room.Name} | {Start:yyyy-MM-dd HH:mm} - {End:HH:mm} | ${Price:F2} | Seats: {AvailableSeats}/{Room.Capacity} available"
-    //
-    // HINTS:
-    // - HashSet<int> provides O(1) Contains operation
-    // - Use LINQ: seats.Any(s => s < 1 || s > Room.Capacity)
-    // - See skeleton-examples/Show.cs for complete implementation example
-    //==========================================================================
+    // Unique identifier for this show (automatically generated)
+    public Guid Id { get; } = Guid.NewGuid();
     
+    // What movie is being shown
+    public Movie Movie { get; }
+    
+    // Which room is hosting this show
+    public Room Room { get; }
+    
+    // When the show starts
+    public DateTime Start { get; }
+    
+    // When the show ends (calculated from start + movie duration)
+    public DateTime End => Start + Movie.Duration;
+    
+    // Ticket price for this show
+    public decimal Price { get; }
+    
+    // Private set of booked seat numbers - uses HashSet for fast lookup
+    // HashSet provides O(1) Contains operation for checking if seat is taken
+    private readonly HashSet<int> _taken = new();
+    
+    /// <summary>
+    /// Creates a new show.
+    /// Constructor demonstrates COMPOSITION - Show "has-a" Movie and Room.
+    /// </summary>
     public Show(Movie movie, Room room, DateTime start, decimal price)
     {
-        throw new NotImplementedException("TODO: Initialize Show properties");
+        Movie = movie;
+        Room = room;
+        Start = start;
+        Price = price;
     }
     
+    /// <summary>
+    /// Attempts to book specified seats.
+    /// Returns true if booking succeeds, false if any seat is invalid or taken.
+    /// This method demonstrates DEFENSIVE PROGRAMMING - validates all inputs.
+    /// </summary>
+    /// <param name="seats">Array of seat numbers to book (1-indexed)</param>
+    /// <returns>True if all seats were successfully booked, false otherwise</returns>
     public bool TryBook(params int[] seats)
     {
-        throw new NotImplementedException("TODO: Implement seat booking with validation");
+        // Validate input
+        if (seats.Length == 0)
+            return false;
+        
+        // Check if any seat number is out of range (1 to Capacity)
+        if (seats.Any(s => s < 1 || s > Room.Capacity))
+            return false;
+        
+        // Check if any seat is already taken
+        if (seats.Any(_taken.Contains))
+            return false;
+        
+        // All validations passed - book all seats
+        foreach (var seat in seats)
+        {
+            _taken.Add(seat);
+        }
+        
+        return true;
+    }
+    
+    /// <summary>
+    /// Gets the number of available seats remaining.
+    /// </summary>
+    public int AvailableSeats => Room.Capacity - _taken.Count;
+    
+    /// <summary>
+    /// Provides a detailed string representation of the show.
+    /// </summary>
+    public override string ToString()
+    {
+        return $"[{Id:N}] {Movie.Title} | {Room.Name} | " +
+               $"{Start:yyyy-MM-dd HH:mm} - {End:HH:mm} | " +
+               $"${Price:F2} | Seats: {AvailableSeats}/{Room.Capacity} available";
     }
 }

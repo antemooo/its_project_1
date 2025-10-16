@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: IDiv.cs
-// ⭐⭐ DIFFICULTY: Medium | ⏱️ TIME: 20 minutes
-// 🧪 TEST: idiv 7 2 → 3.0 | idiv 10 3 → 3.0 | idiv 10 0 → ERROR
-//==============================================================================
-
 using System;
 using SciCalc.Models;
 
@@ -20,14 +14,18 @@ public sealed class IDiv : IOperation
     public string Help => "idiv a b - Integer division (discards remainder)";
     
     /// <summary>
-    /// STUDENT TODO: Implement integer division.
-    /// 1. Validate args.Length == 2
-    /// 2. Check args[1] != 0 (division by zero error!)
-    /// 3. Divide args[0] / args[1] and use Math.Truncate() to remove decimals
-    /// HINT: Math.Truncate rounds toward zero (7.9 → 7, -7.9 → -7)
+    /// Performs integer division by truncating the result.
+    /// Math.Truncate removes the decimal part.
     /// </summary>
     public double Evaluate(params double[] args)
     {
-        throw new NotImplementedException("TODO: Implement integer division with error handling");
+        if (args.Length != 2)
+            throw new ArgumentException("Integer division requires exactly 2 arguments");
+        
+        if (args[1] == 0)
+            throw new DivideByZeroException("Cannot divide by zero");
+        
+        // Divide and truncate to get integer result
+        return Math.Truncate(args[0] / args[1]);
     }
 }

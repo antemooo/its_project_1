@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Pow.cs
-// ⭐ DIFFICULTY: Easy | ⏱️ TIME: 15 minutes
-// 🧪 TEST: pow 2 8 → 256.0 | pow 3 2 → 9.0 | pow 5 0 → 1.0
-//==============================================================================
-
 using System;
 using SciCalc.Models;
 
@@ -19,13 +13,14 @@ public sealed class Pow : IOperation
     public string Help => "pow x y - Calculates x raised to the power of y (x^y)";
     
     /// <summary>
-    /// STUDENT TODO: Implement exponentiation.
-    /// 1. Validate args.Length == 2 (base and exponent)
-    /// 2. Use Math.Pow(base, exponent) from .NET Math library
-    /// HINT: Math.Pow returns double, perfect for this use case
+    /// Calculates x raised to the power of y.
+    /// Uses Math.Pow() from the .NET Math library.
     /// </summary>
     public double Evaluate(params double[] args)
     {
-        throw new NotImplementedException("TODO: Implement power operation");
+        if (args.Length != 2)
+            throw new ArgumentException("Power requires exactly 2 arguments (base and exponent)");
+        
+        return Math.Pow(args[0], args[1]);
     }
 }

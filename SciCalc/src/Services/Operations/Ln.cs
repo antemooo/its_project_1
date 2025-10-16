@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Ln.cs
-// ⭐⭐ DIFFICULTY: Medium | ⏱️ TIME: 20 minutes
-// 🧪 TEST: ln 2.71828 → ~1.0 | ln 7.389 → ~2.0 | ln 0 → ERROR
-//==============================================================================
-
 using System;
 using SciCalc.Models;
 
@@ -19,14 +13,17 @@ public sealed class Ln : IOperation
     public string Help => "ln x - Calculates natural logarithm of x (base e)";
     
     /// <summary>
-    /// STUDENT TODO: Implement natural logarithm with validation.
-    /// 1. Check args.Length == 1
-    /// 2. Validate args[0] > 0 (same domain constraint as log10!)
-    /// 3. Use Math.Log(x) - note: Math.Log is natural log, Math.Log10 is base-10
-    /// HINT: e ≈ 2.71828 is Euler's number (Math.E in C#)
+    /// Calculates natural logarithm (base e).
+    /// e ≈ 2.71828... is Euler's number, fundamental in calculus.
     /// </summary>
     public double Evaluate(params double[] args)
     {
-        throw new NotImplementedException("TODO: Implement natural logarithm with domain validation");
+        if (args.Length != 1)
+            throw new ArgumentException("Natural log requires exactly 1 argument");
+        
+        if (args[0] <= 0)
+            throw new ArgumentException("Logarithm only defined for positive numbers");
+        
+        return Math.Log(args[0]);
     }
 }

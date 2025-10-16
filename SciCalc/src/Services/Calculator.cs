@@ -20,39 +20,78 @@ public static class Calculator
     // Current angle mode setting (can be changed by user with 'mode' command)
     private static AngleMode _angleMode = AngleMode.Radians;
 
-    //==========================================================================
-    // STUDENT TODO: Implement main calculator command loop
-    // ⭐⭐⭐⭐ DIFFICULTY: Hard | ⏱️ TIME: 60-90 minutes
-    //
-    // LEARNING OBJECTIVES:
-    // - Command parsing and dispatch pattern
-    // - Exception handling and error messages
-    // - Pattern matching (switch expressions)
-    // - REPL (Read-Eval-Print Loop) architecture
-    //
-    // REQUIRED STEPS:
-    // 1. Print welcome message
-    // 2. Infinite loop: Read line, parse command, execute, print result
-    // 3. Handle special commands: 'exit', 'help', 'mode deg|rad'
-    // 4. Look up operation in Ops dictionary
-    // 5. Parse arguments using ParseNumber helper
-    // 6. Dispatch to ITrigonometric or IOperation
-    // 7. Print result with culture-invariant formatting
-    // 8. Catch exceptions and print error messages
-    //
-    // HINTS:
-    // - Use Console.ReadLine() in infinite loop (for (;;) {...})
-    // - Split input: var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries)
-    // - Look up operation: if (!Ops.TryGetValue(cmd, out var op)) { error }
-    // - Use pattern matching: result = op switch { ITrigonometric trig => trig.Evaluate(args, _angleMode), _ => op.Evaluate(args) }
-    // - Format output: result.ToString("G17", CultureInfo.InvariantCulture)
-    //==========================================================================
     /// <summary>
     /// Main calculator loop - reads commands and executes them until user types 'exit'
     /// </summary>
     public static void Run()
     {
-        throw new NotImplementedException("TODO: Implement REPL command loop");
+        Console.WriteLine("SciCalc — type 'help' for commands or 'exit' to quit");
+        Console.WriteLine();
+        
+        // Infinite loop - only exits when user types 'exit'
+        for (;;)
+        {
+            Console.Write("> ");
+            var line = Console.ReadLine();
+            
+            // Skip empty lines
+            if (string.IsNullOrWhiteSpace(line)) 
+                continue;
+            
+            // Exit command
+            if (line.Equals("exit", StringComparison.OrdinalIgnoreCase)) 
+                return;
+
+            // Split input into parts: command and arguments
+            var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var cmd = parts[0].ToLowerInvariant();
+
+            // Handle special commands
+            if (cmd == "help") 
+            { 
+                PrintHelp(); 
+                continue; 
+            }
+            
+            if (cmd == "mode" && parts.Length == 2)
+            {
+                // Change angle mode between degrees and radians
+                _angleMode = parts[1].StartsWith("deg", true, CultureInfo.InvariantCulture) 
+                    ? AngleMode.Degrees 
+                    : AngleMode.Radians;
+                Console.WriteLine($"Angle mode: {_angleMode}");
+                continue;
+            }
+
+            // Check if command exists
+            if (!Ops.TryGetValue(cmd, out var op))
+            {
+                Console.WriteLine("Unknown command. Try 'help'");
+                continue;
+            }
+
+            // Execute the operation
+            try
+            {
+                // Parse all arguments after the command
+                var args = parts.Skip(1).Select(ParseNumber).ToArray();
+                
+                // Use pattern matching to check if operation needs angle mode
+                double result = op switch
+                {
+                    ITrigonometric trig => trig.Evaluate(args, _angleMode),
+                    _ => op.Evaluate(args)
+                };
+                
+                // Print result with high precision (G17 format shows up to 17 digits)
+                Console.WriteLine(result.ToString("G17", CultureInfo.InvariantCulture));
+            }
+            catch (Exception ex) 
+            { 
+                // Catch and display any errors (division by zero, invalid input, etc.)
+                Console.WriteLine($"Error: {ex.Message}"); 
+            }
+        }
     }
 
     /// <summary>

@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Sin.cs
-// ⭐⭐ DIFFICULTY: Medium | ⏱️ TIME: 25 minutes
-// 🧪 TEST: sin 30 (degrees) → 0.5 | sin π/2 (radians) → 1.0
-//==============================================================================
-
 using System;
 using SciCalc.Models;
 
@@ -28,18 +22,21 @@ public sealed class Sin : ITrigonometric
     }
     
     /// <summary>
-    /// STUDENT TODO: Implement sine with angle conversion.
-    /// 
-    /// STEPS:
-    /// 1. Validate args.Length == 1
-    /// 2. Get angle from args[0]
-    /// 3. IF mode is Degrees: Convert to radians (angle * Math.PI / 180.0)
-    /// 4. Call Math.Sin(angle) - it expects radians
-    /// 
-    /// HINT: Formula to convert degrees→radians: radians = degrees × (π / 180)
+    /// Calculates sine with angle mode consideration.
+    /// Math.Sin expects radians, so we convert degrees if needed.
     /// </summary>
     public double Evaluate(double[] args, AngleMode mode)
     {
-        throw new NotImplementedException("TODO: Implement sine with angle mode conversion");
+        if (args.Length != 1)
+            throw new ArgumentException("Sine requires exactly 1 argument");
+        
+        var angle = args[0];
+        
+        // Convert degrees to radians if necessary
+        // Formula: radians = degrees × (π / 180)
+        if (mode == AngleMode.Degrees)
+            angle = angle * Math.PI / 180.0;
+        
+        return Math.Sin(angle);
     }
 }

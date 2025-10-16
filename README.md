@@ -1,63 +1,7 @@
-# 🎓 Mini-Project Pack (Week 5, Solo) — Educational Skeleton Version
-
-> **⚠️ IMPORTANT**: These are **skeleton/template** projects designed for learning!  
-> All implementation files have been converted to educational scaffolding with TODO comments and hints.  
-> **Your task**: Complete the implementations by following the detailed guides provided.
-
-## 📦 What's Included
-
-This repository contains **three complete project skeletons** with:
-- ✅ **Full project structure** and build system
-- ✅ **Skeleton implementations** with detailed TODO comments
-- ✅ **Comprehensive documentation** (22,000+ lines of guides)
-- ✅ **Test data files** with 900+ example commands
-- ✅ **Difficulty ratings** (⭐ to ⭐⭐⭐⭐⭐) and time estimates
-- ✅ **Step-by-step implementation guides**
-- ✅ **Example skeleton templates** showing completed patterns
-
-**Total Learning Time**: 48-64 hours over 8 weeks
 
 ---
 
-## 🚀 Getting Started (5 Minutes)
-
-### 1. Choose Your Project
-
-| Project | Files | Difficulty | Main Topics | Estimated Time |
-|---------|-------|------------|-------------|----------------|
-| **SciCalc** | 15 files | ⭐-⭐⭐⭐ | LINQ, Interfaces, Factory Pattern | 12-20 hours |
-| **CinemaApp** | 4 files | ⭐⭐-⭐⭐⭐⭐⭐ | Records, Greedy Algorithm, Repository | 10-15 hours |
-| **TrafficSim** | 6 files | ⭐⭐-⭐⭐⭐⭐⭐ | State Machines, Dijkstra, Graphs | 12-20 hours |
-
-**Recommendation**: Start with **SciCalc** if new to C#!
-
-### 2. Build & Run
-
-```bash
-# Navigate to your chosen project
-cd SciCalc        # or CinemaApp or TrafficSim
-
-# Build the project (should succeed even with skeletons!)
-dotnet build
-
-# Run the application
-dotnet run
-```
-
-**Expected**: The app starts but throws `NotImplementedException` when you try to use features.  
-**Your goal**: Implement the missing functionality following the TODO comments!
-
-### 3. Read the Documentation
-
-📚 **Start Here**: 
-1. **`QUICK_START.md`** - 15-minute introduction (read first!)
-2. **`IMPLEMENTATION_GUIDE.md`** - Week-by-week roadmap with examples
-3. **Project-specific `README.md`** - Inside each project folder
-4. **`examples.txt`** - Test cases and usage examples (in each project's root)
-
----
-
-## 🎯 Choose **ONE** Project
+# Mini-Project Pack (Week 5, Solo) — Choose **ONE**
 
 **Common rules (for all options)**
 
@@ -84,153 +28,75 @@ dotnet run
 | **Robustness** | 10 | Input validation, error handling, handles edge cases |
 | **Documentation & Demo** | 10 | Clear README, good examples, effective demo video |
 
-## 📁 Repository Layout (Already Set Up!)
+## 📁 Suggested Repository Layout (all projects)
 
-All projects follow this professional structure:
+**Important**: Separate your code into logical folders. This shows professional organization and makes code easier to find and maintain.
 
 ```
-its_project_1/
-├── SciCalc/                      # Scientific Calculator Project
-│   ├── src/
-│   │   ├── Models/               # AngleMode enum
-│   │   ├── Services/
-│   │   │   ├── Operations/       # Add, Sub, Mul, Div, Sin, Cos, etc. (⭐-⭐⭐)
-│   │   │   ├── IOperation.cs
-│   │   │   ├── ITrigonometric.cs
-│   │   │   └── OperationFactory.cs
-│   │   ├── Calculator.cs         # Main REPL (⭐⭐⭐⭐)
-│   │   └── Program.cs
-│   ├── data/
-│   │   └── test-cases.txt        # 200+ test commands
-│   ├── examples.txt              # Usage examples
-│   └── README.md
-│
-├── CinemaApp/                    # Cinema Booking System
-│   ├── src/
-│   │   ├── Models/               # Movie, Room (complete)
-│   │   │   └── Show.cs           # Booking logic (⭐⭐⭐)
-│   │   ├── Services/
-│   │   │   ├── InMemoryShowStore.cs        # Repository (⭐)
-│   │   │   └── GreedyMarathonPlanner.cs    # Algorithm (⭐⭐⭐⭐⭐)
-│   │   ├── App.cs                # Command handlers (⭐⭐-⭐⭐⭐)
-│   │   └── Program.cs
-│   ├── data/
-│   │   └── test-cases.txt        # 300+ test scenarios
-│   ├── examples.txt              # Usage examples
-│   └── README.md
-│
-├── TrafficSim/                   # Traffic Simulation
-│   ├── src/
-│   │   ├── Models/               # Vehicle, Side, LightState (complete)
-│   │   │   └── TrafficLight.cs   # State machine (⭐⭐-⭐⭐⭐)
-│   │   ├── Services/
-│   │   │   ├── Street.cs         # Vehicle queue (⭐⭐)
-│   │   │   ├── CrossRoad.cs      # Intersection (⭐⭐⭐)
-│   │   │   ├── City.cs           # Grid management (⭐⭐)
-│   │   │   ├── ShortestPath.cs   # Dijkstra algorithm (⭐⭐⭐⭐⭐)
-│   │   │   └── App.cs            # CLI (⭐⭐)
-│   │   └── Program.cs
-│   ├── data/
-│   │   └── test-cases.txt        # 400+ pathfinding tests
-│   ├── examples.txt              # Usage examples & algorithm guide
-│   └── README.md
-│
-├── skeleton-examples/            # Complete implementation examples
-│   ├── Add.cs                    # ⭐ Easy template
-│   ├── Show.cs                   # ⭐⭐⭐ Medium template
-│   ├── GreedyMarathonPlanner.cs  # ⭐⭐⭐⭐⭐ Hard template
-│   └── README.md
-│
-├── QUICK_START.md                # 15-minute getting started guide
-├── IMPLEMENTATION_GUIDE.md       # Week-by-week roadmap
-├── HINTS_AND_TIPS.md             # Solutions to common problems
-├── QUICK_REFERENCE.md            # Fast lookup for all tasks
-├── SKELETON_CONVERSION_COMPLETE.md  # Final status report
-└── README.md                     # This file
+your-project/
+├── src/                          # All source code goes here
+│   ├── Models/                   # Data classes (Vehicle, Movie, Room, etc.)
+│   │   ├── YourClass.cs
+│   │   └── YourInterface.cs
+│   ├── Services/                 # Business logic, strategies, repositories
+│   │   ├── Operations/           # (Calculator only) Individual operations
+│   │   ├── YourFactory.cs
+│   │   ├── YourRepository.cs
+│   │   └── YourStrategy.cs
+│   └── Program.cs                # Entry point (Main method)
+├── data/                         # Sample data files
+│   ├── examples.txt              # Example commands
+│   └── sample-data.json          # Test data (if using JSON)
+├── docs/                         # Documentation (optional)
+│   ├── concepts.md               # Explain your algorithms
+│   └── screenshots/              # Demo images
+├── README.md                     # Project documentation
+└── .gitignore                    # Ignore bin/, obj/, etc.
 ```
 
 ### Why This Structure?
-- **Models/** = Data classes and enums (Vehicle, Movie, Room, Side, etc.)
-- **Services/** = Business logic (Calculator, Planner, Pathfinder, etc.)
+- **Models/** = "What data do we have?" (nouns: Movie, Vehicle, Room)
+- **Services/** = "What can we do?" (verbs: Calculate, Plan, Store)
 - **Program.cs** = Entry point that starts everything
-- **data/** = Test cases and sample data
-- **examples.txt** = Usage guide with commands and expected outputs
+- **data/** = Sample inputs for testing
+- **docs/** = Explanations and documentation
 
-## 📅 8-Week Learning Schedule
+## 📅 Working Week Guide (Day-by-Day)
 
-This skeleton package is designed for **8 weeks of learning** (~6-8 hours per week):
+### **Day 1: Setup & Foundation** (Monday)
+- ✅ Create GitHub repository
+- ✅ Add .gitignore for C# (ignore `bin/`, `obj/`)
+- ✅ Create basic folder structure (`src/Models/`, `src/Services/`)
+- ✅ Write skeleton Program.cs with basic menu
+- ✅ Create first model class
+- 🔄 **PR #1**: "Initial project setup"
 
-### **Weeks 1-2: SciCalc Basic Operations** (⭐-⭐⭐)
-**Topics**: LINQ basics, simple validation, arithmetic operations  
-**Files**: Add, Sub, Mul, Mod, Pow (5 files)  
-**Time**: 4-6 hours total
+### **Day 2: Core Features** (Tuesday)
+- ✅ Implement main user commands (add, list, calculate)
+- ✅ Add input parsing and validation
+- ✅ Create basic services (Calculator, Store, etc.)
+- 🔄 **PR #2**: "Implement core features"
 
-- ✅ Implement basic arithmetic (add, sub, mul)
-- ✅ Learn LINQ methods (Sum, Aggregate)
-- ✅ Handle edge cases (empty arrays, single values)
-- 🔄 **PR #1-2**: "Basic operations complete"
+### **Day 3: Persistence & Algorithms** (Wednesday)
+- ✅ Add data persistence (JSON/CSV or in-memory repository)
+- ✅ Implement main algorithm (operations, shortest path, marathon planning)
+- ✅ Test with sample data
+- 🔄 **PR #3**: "Add persistence layer"
+- 🔄 **PR #4**: "Implement main algorithm"
 
-### **Weeks 2-3: SciCalc Advanced Operations** (⭐⭐-⭐⭐⭐)
-**Topics**: Error handling, domain validation, logarithms, factorial  
-**Files**: Div, Sqrt, Log10, Ln, IDiv, Fact (6 files)  
-**Time**: 6-8 hours total
+### **Day 4: Polish & Patterns** (Thursday)
+- ✅ Add error handling for all inputs
+- ✅ Improve user experience (better messages, help text)
+- ✅ Ensure design pattern is clearly implemented
+- ✅ Add code comments explaining complex parts
+- 🔄 **PR #5**: "Error handling and UX improvements"
 
-- ✅ Add division with zero check
-- ✅ Implement domain validation (sqrt of negative)
-- ✅ Learn Math library functions
-- 🔄 **PR #3-4**: "Advanced math operations"
-
-### **Weeks 3-4: SciCalc REPL + Trigonometry** (⭐⭐-⭐⭐⭐⭐)
-**Topics**: Command parsing, pattern matching, angle modes  
-**Files**: Sin, Cos, Tan, Calculator.cs (4 files)  
-**Time**: 8-10 hours total
-
-- ✅ Implement trigonometric functions
-- ✅ Add angle mode switching (deg/rad)
-- ✅ Build REPL command loop
-- 🔄 **PR #5-6**: "Trig functions and REPL complete"
-
-### **Weeks 4-5: CinemaApp Booking** (⭐-⭐⭐⭐)
-**Topics**: HashSet validation, repository pattern, LINQ queries  
-**Files**: Show, InMemoryShowStore, App handlers (3 files)  
-**Time**: 6-8 hours total
-
-- ✅ Implement seat booking with collision detection
-- ✅ Add repository for show storage
-- ✅ Create 6 command handlers
-- 🔄 **PR #7-8**: "Booking system complete"
-
-### **Weeks 5-6: CinemaApp Marathon** (⭐⭐⭐⭐⭐)
-**Topics**: Greedy algorithms, interval scheduling  
-**Files**: GreedyMarathonPlanner (1 file)  
-**Time**: 8-12 hours total
-
-- ✅ Implement greedy interval scheduling
-- ✅ Sort by earliest finish time
-- ✅ Handle overlapping shows
-- 🔄 **PR #9**: "Marathon planning algorithm"
-
-### **Weeks 6-7: TrafficSim Core** (⭐⭐-⭐⭐⭐)
-**Topics**: State machines, queues, grid structures  
-**Files**: TrafficLight, Street, CrossRoad, City (4 files)  
-**Time**: 8-10 hours total
-
-- ✅ Build traffic light state machine
-- ✅ Implement vehicle queues
-- ✅ Create grid of crossroads
-- 🔄 **PR #10-11**: "Traffic simulation core"
-
-### **Weeks 7-8: TrafficSim Pathfinding** (⭐⭐⭐⭐⭐)
-**Topics**: Dijkstra's algorithm, graph traversal  
-**Files**: ShortestPath, App (2 files)  
-**Time**: 8-10 hours total
-
-- ✅ Implement Dijkstra's algorithm
-- ✅ Handle graph traversal
-- ✅ Add CLI for pathfinding
-- 🔄 **PR #12**: "Shortest path complete"
-
-**Total**: 48-64 hours over 8 weeks
+### **Day 5: Documentation & Demo** (Friday)
+- ✅ Write comprehensive README with examples
+- ✅ Create sample data file (`data/examples.txt`)
+- ✅ Record demo video or prepare live demo
+- ✅ Final testing and bug fixes
+- ✅ Tag release as `v1.0`
 
 ## 🎯 Success Tips
 
@@ -381,16 +247,11 @@ public sealed class Fact : IOperation { public string Name=>"fact"; public strin
 
 ### Acceptance tests (samples)
 
-See `SciCalc/data/test-cases.txt` for 200+ comprehensive test cases including:
-
-* **Basic arithmetic:** `add 2.5 1 -2 24.5125 0.33` → `26.3425`
-* **Division types:** `div 7 2` → `3.5` ; `idiv 7 2` → `3`; `mod 7 2` → `1`
-* **Angle modes:** `mode deg` → `Angle mode: Degrees`; `sin 30` → `0.5`
-* **Advanced math:** `pow 2 8` → `256` ; `sqrt 9` → `3` ; `log10 1000` → `3`
-* **Factorial:** `fact 5` → `120` ; `fact -1` → friendly error
-* **Edge cases:** Division by zero, negative sqrt, factorial validation
-
-**Full test suite**: All operations, error scenarios, and complex calculations available in test file.
+* `add 2.5 1 -2 24.5125 0.33` → `26.3425`
+* `div 7 2` → `3.5` ; `idiv 7 2` → `3`; `mod 7 2` → `1`
+* `mode deg` → `Angle mode: Degrees`; `sin 30` → `0.5`
+* `pow 2 8` → `256` ; `sqrt 9` → `3` ; `log10 1000` → `3` ; `ln 1` → `0`
+* `fact 5` → `120` ; `fact -1` → friendly error.
 
 ---
 
@@ -495,26 +356,11 @@ public sealed class TrafficLight
 
 ### Acceptance tests (samples)
 
-See `TrafficSim/examples.txt` for 400+ comprehensive test cases including:
-
-* **Basic pathfinding:** Adjacent moves, diagonal paths, corner-to-corner
-  - `path 0 0 1 0` → cost 1 (horizontal)
-  - `path 0 0 0 1` → cost 1 (vertical)
-  - `path 0 0 2 2` → cost 4 (Manhattan distance)
-  
-* **Algorithm verification:** Manhattan distance calculations
-  - All shortest paths should equal |x2-x1| + |y2-y1|
-  - Multiple valid paths with same cost are acceptable
-  
-* **Edge cases:** Same start/goal, grid boundaries
-  - `path 1 1 1 1` → cost 0 (already at destination)
-  - `path 0 0 4 4` → cost 8 (maximum distance in 5×5 grid)
-
-**Full test suite**: See `TrafficSim/examples.txt` for complete testing guide with:
-- Step-by-step Dijkstra verification
-- Debugging tips and common mistakes
-- Expected output formats
-- Unit test examples for all classes
+* **Crossing flow:** with `Green` flow=2/min and `Yellow`=1/min, after 3 minutes green + 1 minute yellow, expect 7 cars released (2+2+2+1).
+* **Capacity:** when a light/street reaches capacity, further cars remain upstream.
+* **Priority:** a priority vehicle at red still passes first minute.
+* **Routing:** on a 2×2 grid with unit street times and no roadworks, shortest path from (0,0) to (1,1) has length 2 edges.
+* **Roadworks:** closing one edge forces alternate equal-length path; if no path, vehicle remains queued.
 
 ---
 
@@ -612,18 +458,10 @@ public sealed class GreedyMarathonPlanner : IMarathonPlanner
 
 ### Acceptance tests (samples)
 
-See `CinemaApp/data/test-cases.txt` for 300+ comprehensive test cases including:
-
-* **Complete workflows:** Room setup → Movie addition → Show creation → Booking
-* **Seat validation:** Same seat twice fails, invalid seat index fails
-* **Marathon planning:**
-  - Two overlapping shows → only one included
-  - Sequential shows in different rooms → both allowed (no conflict)
-  - Empty day → returns empty plan
-  - Full day → maximizes number of shows watched
-* **Edge cases:** Capacity limits, time overlaps, greedy algorithm verification
-
-**Full test suite**: Complete booking scenarios, marathon test cases, and algorithm verification.
+* Two overlapping shows in the same time range → only one included in marathon plan.
+* Sequential shows across **different rooms** are allowed (no time conflict).
+* Booking the same seat twice fails; booking invalid seat index fails.
+* Marathon on empty day returns empty plan.
 
 ---
 
@@ -641,98 +479,12 @@ See `CinemaApp/data/test-cases.txt` for 300+ comprehensive test cases including:
 
 ---
 
-## 📦 What You Get
+## Submission checklist (students)
 
-### ✅ Complete Skeleton Code
-- All 25 implementation files converted to educational templates
-- Projects build successfully (even with skeletons!)
-- Clear `NotImplementedException` markers showing what to implement
-
-### ✅ Comprehensive Documentation (22,000+ lines)
-- **QUICK_START.md** - Get running in 15 minutes
-- **IMPLEMENTATION_GUIDE.md** - Week-by-week roadmap with examples
-- **HINTS_AND_TIPS.md** - Solutions to common problems
-- **QUICK_REFERENCE.md** - Fast lookup for all 25 files
-
-### ✅ Test Data (900+ lines)
-- **SciCalc**: 200+ arithmetic, trig, and edge case tests
-- **CinemaApp**: 300+ booking and marathon scenarios
-- **TrafficSim**: 400+ pathfinding and algorithm tests
-
-### ✅ Example Templates
-- Complete implementations at three difficulty levels
-- Shows proper code structure and patterns
-- Reference when stuck on implementation
-
----
-
-## ✅ Success Criteria (Grading)
-
-By end of Week 8 (or Week 5 for fast track), you should have:
-
-### Functionality (40 points)
-* [ ] All `NotImplementedException` replaced with working code
-* [ ] All test cases from `data/test-cases.txt` pass
-* [ ] Edge cases handled (empty input, invalid data, etc.)
-* [ ] Compiles on .NET 8; no runtime crashes
-
-### Code Quality & OOP (25 points)
-* [ ] Clean, readable code with meaningful variable names
-* [ ] Proper use of LINQ where appropriate
-* [ ] Design patterns clearly implemented
-* [ ] Comments explaining complex logic
-
-### Git/GitHub Workflow (15 points)
-* [ ] ≥12 PRs merged (one per major file/feature)
-* [ ] Clear commit messages
-* [ ] Good issue descriptions
-* [ ] Feature branches used properly
-
-### Robustness (10 points)
-* [ ] Input validation on all user inputs
-* [ ] Friendly error messages (no stack traces to user)
-* [ ] Handles edge cases gracefully
-
-### Documentation & Demo (10 points)
-* [ ] Updated project README with your additions
-* [ ] Example commands showing new features
-* [ ] Short demo (≤5 min) or screencast (≤3 min)
-
----
-
-## 🎯 Quick Tips
-
-1. **Start with Easy Files (⭐)** - Build confidence first
-2. **Read TODO Comments** - They contain step-by-step hints
-3. **Use Example Templates** - Reference when stuck
-4. **Test Frequently** - Run `dotnet run` after every change
-5. **Check Test Cases** - Use `examples.txt` to verify
-6. **Ask for Help** - Use office hours and course forum
-7. **Commit Often** - Small commits are easier to review
-
----
-
-## 📞 Getting Help
-
-- **Documentation**: Start with `QUICK_START.md`
-- **Examples**: Check `skeleton-examples/` folder
-- **Test Cases**: Use `data/test-cases.txt` or `examples.txt` files
-- **Common Issues**: See `HINTS_AND_TIPS.md`
-- **Course Forum**: Ask questions early!
-- **Office Hours**: Bring specific error messages
-
----
-
-## 🎉 Ready to Start?
-
-1. **Read** `QUICK_START.md` (15 minutes)
-2. **Choose** your project (SciCalc recommended first)
-3. **Build** and run it: `cd SciCalc && dotnet build && dotnet run`
-4. **Pick** an easy file (⭐ difficulty)
-5. **Implement** following the TODO comments
-6. **Test** using examples from `data/test-cases.txt`
-7. **Commit** and move to next file!
-
-**Good luck! 🚀 You've got comprehensive scaffolding to guide you every step of the way!**
+* [ ] Compiles on .NET 8; no runtime crashes on normal usage.
+* [ ] README with run steps and **3–5 example commands** (with expected output).
+* [ ] ≥5 PRs merged with clear commit messages.
+* [ ] At least one small pattern used sensibly (and noted in README).
+* [ ] Short demo or screencast (≤5 min).
 
 ---

@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Mul.cs
-// ⭐ DIFFICULTY: Easy | ⏱️ TIME: 15 minutes
-// 🧪 TEST: mul 2 3 4 → 24.0 | mul 5 → 5.0 | mul → 1.0
-//==============================================================================
-
 using System;
 using System.Linq;
 using SciCalc.Models;
@@ -20,12 +14,14 @@ public sealed class Mul : IOperation
     public string Help => "mul x y [z ...] - Multiplies all numbers together";
     
     /// <summary>
-    /// STUDENT TODO: Implement multiplication.
-    /// HINT: Use Aggregate: args.Aggregate(1.0, (acc, x) => acc * x)
-    /// Empty array should return 1 (multiplicative identity).
+    /// Multiplies all numbers together.
+    /// Starts with 1.0 (identity element for multiplication).
     /// </summary>
     public double Evaluate(params double[] args)
     {
-        throw new NotImplementedException("TODO: Implement multiplication");
+        if (args.Length == 0) return 0;
+        
+        // Aggregate with initial value 1.0, multiply each element
+        return args.Aggregate(1.0, (accumulator, x) => accumulator * x);
     }
 }

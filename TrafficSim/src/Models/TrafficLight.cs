@@ -56,11 +56,6 @@ public sealed class TrafficLight
         _stateDurations[state] = minutes;
     }
     
-    //==========================================================================
-    // STUDENT TODO: Implement TryEnqueue - add vehicle to queue with priority handling
-    // ⭐⭐ DIFFICULTY: Medium | ⏱️ TIME: 20 minutes
-    // STEPS: Check capacity, priority vehicles → AddFirst(), regular → AddLast()
-    //==========================================================================
     /// <summary>
     /// Attempts to add a vehicle to the queue.
     /// Priority vehicles go to front, regular vehicles to back.
@@ -68,14 +63,18 @@ public sealed class TrafficLight
     /// </summary>
     public bool TryEnqueue(Vehicle vehicle)
     {
-        throw new NotImplementedException("TODO: Check capacity, add priority vehicles to front, regular to back");
+        if (_queue.Count >= Capacity)
+            return false;
+        
+        // Priority vehicles jump to front of queue
+        if (vehicle.Priority)
+            _queue.AddFirst(vehicle);
+        else
+            _queue.AddLast(vehicle);
+        
+        return true;
     }
     
-    //==========================================================================
-    // STUDENT TODO: Implement ReleaseThisMinute - release vehicles based on light state
-    // ⭐⭐⭐ DIFFICULTY: Medium-Hard | ⏱️ TIME: 30 minutes
-    // Use yield return pattern, calculate allowed count from State (Green/Yellow/Red)
-    //==========================================================================
     /// <summary>
     /// Releases vehicles based on current light state.
     /// - Green: Full flow
@@ -84,21 +83,42 @@ public sealed class TrafficLight
     /// </summary>
     public IEnumerable<Vehicle> ReleaseThisMinute()
     {
-        throw new NotImplementedException("TODO: Calculate allowed count, dequeue and yield vehicles");
+        int allowed = State switch
+        {
+            LightState.Green => FlowPerMinute,
+            LightState.Yellow => Math.Max(1, FlowPerMinute / 2),
+            _ => 0
+        };
+        
+        while (allowed-- > 0 && _queue.Count > 0)
+        {
+            var vehicle = _queue.First!.Value;
+            _queue.RemoveFirst();
+            yield return vehicle;
+        }
     }
     
-    //==========================================================================
-    // STUDENT TODO: Implement Tick - advance state machine
-    // ⭐⭐ DIFFICULTY: Medium | ⏱️ TIME: 25 minutes
-    // Decrement _timeLeft, when 0 → transition state (Green→Yellow→Red→Green), reset timer
-    //==========================================================================
     /// <summary>
     /// Advances light state based on time.
     /// Called once per simulation minute.
     /// </summary>
     public void Tick()
     {
-        throw new NotImplementedException("TODO: Decrement timer, transition state when expired");
+        _timeLeft--;
+        
+        if (_timeLeft > 0)
+            return;
+        
+        // Time expired - transition to next state
+        State = State switch
+        {
+            LightState.Green => LightState.Yellow,
+            LightState.Yellow => LightState.Red,
+            LightState.Red => LightState.Green,
+            _ => LightState.Red
+        };
+        
+        _timeLeft = _stateDurations[State];
     }
     
     /// <summary>

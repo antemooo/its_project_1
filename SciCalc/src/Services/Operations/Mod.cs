@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Mod.cs
-// ⭐ DIFFICULTY: Easy | ⏱️ TIME: 15 minutes
-// 🧪 TEST: mod 7 3 → 1.0 | mod 10 5 → 0.0 | mod 17 4 → 1.0
-//==============================================================================
-
 using System;
 using SciCalc.Models;
 
@@ -19,13 +13,14 @@ public sealed class Mod : IOperation
     public string Help => "mod a b - Calculates remainder when a is divided by b (a % b)";
     
     /// <summary>
-    /// STUDENT TODO: Implement modulo operation.
-    /// 1. Validate args.Length == 2
-    /// 2. Return args[0] % args[1] (use % operator in C#)
-    /// HINT: Modulo is useful for checking divisibility (x % 2 == 0 means even)
+    /// Calculates modulo using the % operator.
+    /// Useful for checking divisibility, cycling values, etc.
     /// </summary>
     public double Evaluate(params double[] args)
     {
-        throw new NotImplementedException("TODO: Implement modulo operation");
+        if (args.Length != 2)
+            throw new ArgumentException("Modulo requires exactly 2 arguments");
+        
+        return args[0] % args[1];
     }
 }

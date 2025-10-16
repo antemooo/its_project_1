@@ -72,27 +72,14 @@ YourProject/
 ### Step 1: Read the Examples
 ```bash
 # From your project folder
-cat examples.txt              # Mac/Linux (TrafficSim)
-cat data/test-cases.txt       # Mac/Linux (SciCalc, CinemaApp)
-
-type examples.txt             # Windows (TrafficSim)
-type data\test-cases.txt      # Windows (SciCalc, CinemaApp)
+cat data/examples.txt    # Mac/Linux
+type data\examples.txt   # Windows
 ```
-
-**What's in these files?**
-- **SciCalc**: 200+ test commands with expected results
-- **CinemaApp**: 300+ booking scenarios and marathon tests
-- **TrafficSim**: 400+ pathfinding tests + algorithm explanations
 
 ### Step 2: Try Some Commands
 
-**For SciCalc:** (from `data/test-cases.txt`)
+**For SciCalc:**
 ```
-> add 5 3 2
-NotImplementedException: TODO: Implement addition
-(You need to implement this!)
-
-After implementation:
 > add 5 3 2
 10
 
@@ -101,37 +88,21 @@ After implementation:
 0.5
 
 > help
-Available commands: add, sub, mul, div, sqrt, pow, sin, cos, tan...
+(shows all commands)
 ```
 
-**For CinemaApp:** (from `data/test-cases.txt`)
+**For CinemaApp:**
 ```
 > add-room "Room A" 100
-NotImplementedException: TODO: Implement room addition
-(You need to implement this!)
-
-After implementation:
-> add-room "Room A" 100
-Room 'Room A' added with 100 seats
-
 > add-movie "Inception" 02:28
 > list-shows 2025-11-01
 ```
 
-**For TrafficSim:** (from `examples.txt`)
+**For TrafficSim:**
 ```
 > path 0 0 2 2
-NotImplementedException: TODO: Implement Dijkstra's algorithm
-(You need to implement this!)
-
-After implementation:
-> path 0 0 2 2
-Shortest path from (0,0) to (2,2):
-(0,0) → (1,0) → (2,0) → (2,1) → (2,2)
-Total cost: 4
+(0,0) -> (1,0) -> (2,0) -> (2,1) -> (2,2)
 ```
-
-**💡 Tip**: All projects will throw `NotImplementedException` until you implement the methods!
 
 ### Step 3: Read ONE File
 

@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Cos.cs
-// ⭐⭐ DIFFICULTY: Medium | ⏱️ TIME: 25 minutes
-// 🧪 TEST: cos 60 (degrees) → 0.5 | cos 0 → 1.0
-//==============================================================================
-
 using System;
 using SciCalc.Models;
 
@@ -25,18 +19,19 @@ public sealed class Cos : ITrigonometric
     }
     
     /// <summary>
-    /// STUDENT TODO: Implement cosine (nearly identical to Sin.cs).
-    /// 
-    /// STEPS:
-    /// 1. Validate args.Length == 1
-    /// 2. Get angle from args[0]
-    /// 3. IF mode is Degrees: Convert to radians (angle * Math.PI / 180.0)
-    /// 4. Call Math.Cos(angle)
-    /// 
-    /// HINT: This is almost the same as Sin, just use Math.Cos instead of Math.Sin!
+    /// Calculates cosine with angle mode consideration.
     /// </summary>
     public double Evaluate(double[] args, AngleMode mode)
     {
-        throw new NotImplementedException("TODO: Implement cosine with angle mode conversion");
+        if (args.Length != 1)
+            throw new ArgumentException("Cosine requires exactly 1 argument");
+        
+        var angle = args[0];
+        
+        // Convert degrees to radians if necessary
+        if (mode == AngleMode.Degrees)
+            angle = angle * Math.PI / 180.0;
+        
+        return Math.Cos(angle);
     }
 }

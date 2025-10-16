@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Fact.cs
-// ⭐⭐⭐ DIFFICULTY: Medium | ⏱️ TIME: 30 minutes
-// 🧪 TEST: fact 5 → 120.0 | fact 0 → 1.0 | fact 3.5 → ERROR | fact -2 → ERROR
-//==============================================================================
-
 using System;
 using SciCalc.Models;
 
@@ -20,21 +14,32 @@ public sealed class Fact : IOperation
     public string Help => "fact n - Calculates factorial (n!) for non-negative integers";
     
     /// <summary>
-    /// STUDENT TODO: Implement factorial with validation.
-    /// 
-    /// VALIDATION REQUIREMENTS:
-    /// 1. Check args.Length == 1
-    /// 2. Check n >= 0 (factorial undefined for negative numbers!)
-    /// 3. Check n == Math.Truncate(n) (must be whole number, no decimals!)
-    /// 
-    /// IMPLEMENTATION:
-    /// - Use loop: result = 1; for i=1 to n: result *= i
-    /// - Special case: 0! = 1 (by definition in math)
-    /// 
-    /// HINT: Use long for result to avoid overflow for larger numbers
+    /// Calculates factorial with strict validation.
+    /// Requirements:
+    /// - n must be non-negative (factorial of negative numbers is undefined)
+    /// - n must be a whole number (no decimals)
     /// </summary>
     public double Evaluate(params double[] args)
     {
-        throw new NotImplementedException("TODO: Implement factorial with strict validation");
+        if (args.Length != 1)
+            throw new ArgumentException("Factorial requires exactly 1 argument");
+        
+        var n = args[0];
+        
+        // Check if n is a non-negative integer
+        if (n < 0)
+            throw new ArgumentException("Factorial is only defined for non-negative numbers");
+        
+        if (n != Math.Truncate(n))
+            throw new ArgumentException("Factorial requires an integer (no decimal part)");
+        
+        // Calculate factorial using a loop
+        long result = 1;
+        for (int i = 1; i <= (int)n; i++)
+        {
+            result *= i;
+        }
+        
+        return result;
     }
 }

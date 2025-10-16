@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: InMemoryShowStore.cs
-// ⭐ DIFFICULTY: Easy | ⏱️ TIME: 20-30 minutes
-// 🧪 TEST: Create store, Add shows, All() returns them, Find(id) works
-//==============================================================================
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,33 +18,30 @@ namespace CinemaApp.Services;
 /// </summary>
 public sealed class InMemoryShowStore : IShowStore
 {
-    //==========================================================================
-    // STUDENT TODO: Implement IShowStore using List<Show>
-    //
-    // STEPS:
-    // 1. Create field: private readonly List<Show> _shows = new();
-    // 2. Implement All(): return _shows (as IEnumerable)
-    // 3. Implement Add(Show show): _shows.Add(show)
-    // 4. Implement Find(Guid id): use LINQ FirstOrDefault
-    //
-    // HINTS:
-    // - All() just returns the list (interface hides implementation)
-    // - Find uses: _shows.FirstOrDefault(show => show.Id == id)
-    // - FirstOrDefault returns null if not found (Show? nullable)
-    //==========================================================================
+    // Private list holds all shows - only accessible through interface methods
+    // This is ENCAPSULATION - internal data is hidden
+    private readonly List<Show> _shows = new();
     
-    public IEnumerable<Show> All()
-    {
-        throw new NotImplementedException("TODO: Return all shows");
-    }
+    /// <summary>
+    /// Returns all shows. Returns IEnumerable to prevent external modification.
+    /// </summary>
+    public IEnumerable<Show> All() => _shows;
     
+    /// <summary>
+    /// Adds a show to the collection.
+    /// In a real application, this might validate for conflicts.
+    /// </summary>
     public void Add(Show show)
     {
-        throw new NotImplementedException("TODO: Add show to list");
+        _shows.Add(show);
     }
     
+    /// <summary>
+    /// Finds a show by ID using LINQ.
+    /// FirstOrDefault returns null if no match found.
+    /// </summary>
     public Show? Find(Guid id)
     {
-        throw new NotImplementedException("TODO: Find show by ID using LINQ");
+        return _shows.FirstOrDefault(show => show.Id == id);
     }
 }

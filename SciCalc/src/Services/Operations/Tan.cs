@@ -1,9 +1,3 @@
-//==============================================================================
-// FILE: Tan.cs
-// ⭐⭐ DIFFICULTY: Medium | ⏱️ TIME: 25 minutes
-// 🧪 TEST: tan 45 (degrees) → 1.0 | tan 0 → 0.0
-//==============================================================================
-
 using System;
 using SciCalc.Models;
 
@@ -25,19 +19,20 @@ public sealed class Tan : ITrigonometric
     }
     
     /// <summary>
-    /// STUDENT TODO: Implement tangent (same pattern as Sin/Cos).
-    /// 
-    /// STEPS:
-    /// 1. Validate args.Length == 1
-    /// 2. Get angle from args[0]
-    /// 3. IF mode is Degrees: Convert to radians (angle * Math.PI / 180.0)
-    /// 4. Call Math.Tan(angle)
-    /// 
-    /// NOTE: tan(90°) and tan(270°) are undefined (return infinity)
-    /// HINT: tan(x) = sin(x) / cos(x), but just use Math.Tan for simplicity
+    /// Calculates tangent with angle mode consideration.
+    /// Note: Tangent is undefined at 90°, 270°, etc. (returns infinity).
     /// </summary>
     public double Evaluate(double[] args, AngleMode mode)
     {
-        throw new NotImplementedException("TODO: Implement tangent with angle mode conversion");
+        if (args.Length != 1)
+            throw new ArgumentException("Tangent requires exactly 1 argument");
+        
+        var angle = args[0];
+        
+        // Convert degrees to radians if necessary
+        if (mode == AngleMode.Degrees)
+            angle = angle * Math.PI / 180.0;
+        
+        return Math.Tan(angle);
     }
 }
